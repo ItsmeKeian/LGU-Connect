@@ -2,11 +2,11 @@
 session_start();
 
 if (isset($_SESSION['user_id'])) {
-  header("Location: " . (
-    $_SESSION['role'] === 'superadmin'
-    ? "/lgu-connect/admin/admin_dashboard.php"
-    : "/lgu-connect/department/dept_dashboard.php"
-));
+    header("Location: " . (
+        $_SESSION['role'] === 'superadmin'
+        ? "../admin/admin_dashboard.php"
+        : "../department/dept_dashboard.php"
+    ));
     exit();
 }
 ?>
