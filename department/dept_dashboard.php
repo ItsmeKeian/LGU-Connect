@@ -1,4 +1,17 @@
 
+<?php
+// department/dept_dashboard.php
+require "../php/auth_check.php";
+
+// Block superadmin from dept dashboard
+if (IS_SUPERADMIN) {
+    header("Location: ../admin/admin_dashboard.php");
+    exit();
+}
+
+// Now safe to use — all queries filtered by department
+$dept = CURRENT_DEPT; // e.g. "MSWD"
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

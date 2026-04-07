@@ -1,4 +1,14 @@
 
+<?php
+// admin/admin_dashboard.php
+require "../php/auth_check.php";
+
+// Block dept_user from accessing admin dashboard
+if (IS_DEPT_USER) {
+    header("Location: ../department/dept_dashboard.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
