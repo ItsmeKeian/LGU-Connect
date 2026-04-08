@@ -269,10 +269,10 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
       <li><a href="admin_dashboard.php" >
         <span class="nav-icon"><i class="bi bi-speedometer2"></i></span> Dashboard
       </a></li>
-      <li><a href="admin_departments.php" class="active">
+      <li><a href="admin_departments.php" >
         <span class="nav-icon"><i class="bi bi-building"></i></span> Departments
       </a></li>
-      <li><a href="admin_allfeedback.php">
+      <li><a href="admin_allfeedback.php" class="active">
         <span class="nav-icon"><i class="bi bi-clipboard-check"></i></span> All Feedback
         <span class="nav-badge" id="sbFeedbackCount">0</span>
       </a></li>
