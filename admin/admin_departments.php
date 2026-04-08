@@ -266,10 +266,10 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
 
     <div class="sb-section">Main</div>
     <ul class="sb-nav">
-      <li><a href="admin_dashboard.php" class="active">
+      <li><a href="admin_dashboard.php" >
         <span class="nav-icon"><i class="bi bi-speedometer2"></i></span> Dashboard
       </a></li>
-      <li><a href="admin_departments.php">
+      <li><a href="admin_departments.php" class="active">
         <span class="nav-icon"><i class="bi bi-building"></i></span> Departments
       </a></li>
       <li><a href="feedback.php">
