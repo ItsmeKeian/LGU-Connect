@@ -1,32 +1,39 @@
 <?php
-// php/ajax/get_departments.php
+// php/ajax/delete_department.php
 require "../auth_check.php";
 require "../dbconnect.php";
 header('Content-Type: application/json');
 
-try {
-    // Get departments WITH feedback summary joined
-    $stmt = $conn->query("
-        SELECT
-            d.*,
-            COUNT(f.id)       AS feedback_count,
-            AVG(f.rating)     AS avg_rating
-        FROM departments d
-        LEFT JOIN feedback f ON f.department_code = d.code
-        GROUP BY d.id
-        ORDER BY d.name ASC
-    ");
-    $departments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['success' => false, 'message' => 'Invalid request.']);
+    exit();
+}
 
-    // Round avg_rating to 2 decimal places
-    foreach ($departments as &$dept) {
-        $dept['avg_rating'] = $dept['avg_rating']
-            ? round((float)$dept['avg_rating'], 2)
-            : null;
-        $dept['feedback_count'] = (int)$dept['feedback_count'];
+$id = intval($_POST['id'] ?? 0);
+if (!$id) {
+    echo json_encode(['success' => false, 'message' => 'Invalid department ID.']);
+    exit();
+}
+
+try {
+    // Get dept name for confirmation message
+    $check = $conn->prepare("SELECT name FROM departments WHERE id = ?");
+    $check->execute([$id]);
+    $dept = $check->fetch(PDO::FETCH_ASSOC);
+
+    if (!$dept) {
+        echo json_encode(['success' => false, 'message' => 'Department not found.']);
+        exit();
     }
 
-    echo json_encode(['success' => true, 'data' => $departments]);
+    // Delete the department
+    $stmt = $conn->prepare("DELETE FROM departments WHERE id = ?");
+    $stmt->execute([$id]);
+
+    echo json_encode([
+        'success' => true,
+        'message' => "Department '{$dept['name']}' has been deleted."
+    ]);
 
 } catch (Exception $e) {
     echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
