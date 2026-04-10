@@ -246,7 +246,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
   <aside class="sidebar" id="sidebar">
 
     <div class="sb-brand">
-      <img src="../assets/img/san_julian_logo.png" class="sb-logo-img" alt="Logo"
+      <img src="../assets/img/logo.png" class="sb-logo-img" alt="Logo"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
       <div class="sb-logo-fallback" style="display:none">SJ</div>
       <div class="sb-brand-text">

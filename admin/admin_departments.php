@@ -11,7 +11,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Departments | LGU-Connect</title>
+<title>LGU-Connect | Municipality of San Julian</title>
 <link rel="icon" href="../assets/img/logo.png" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -273,7 +273,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
   <!-- ══════════ SIDEBAR ══════════ -->
   <aside class="sidebar" id="sidebar">
     <div class="sb-brand">
-      <img src="../assets/img/san_julian_logo.png" class="sb-logo-img" alt="Logo"
+      <img src="../assets/img/logo.png" class="sb-logo-img" alt="Logo"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
       <div class="sb-logo-fallback" style="display:none">SJ</div>
       <div class="sb-brand-text">
