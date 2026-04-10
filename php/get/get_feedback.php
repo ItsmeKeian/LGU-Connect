@@ -16,7 +16,7 @@ $period   = trim($_GET['period'] ?? '');
 $search   = trim($_GET['search'] ?? '');
 $export   = trim($_GET['export'] ?? '');
 
-
+// ── Build WHERE clause ──
 $where  = ['1=1'];
 $params = [];
 
@@ -61,7 +61,7 @@ if ($search) {
 $whereStr = implode(' AND ', $where);
 
 try {
-
+    // ── Summary stats (always full dataset) ──
     $summaryStmt = $conn->prepare("
         SELECT
             COUNT(*)                                          AS total,
@@ -74,7 +74,7 @@ try {
     $summaryStmt->execute($params);
     $summary = $summaryStmt->fetch(PDO::FETCH_ASSOC);
 
-
+    // ── CSV Export ──
     if ($export === 'csv') {
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="feedback_export_' . date('Y-m-d') . '.csv"');
@@ -106,12 +106,12 @@ try {
         exit();
     }
 
- 
+    // ── Total count for pagination ──
     $countStmt = $conn->prepare("SELECT COUNT(*) FROM feedback f WHERE {$whereStr}");
     $countStmt->execute($params);
     $total = (int)$countStmt->fetchColumn();
 
-
+    // ── Paginated data ──
     $dataStmt = $conn->prepare("
         SELECT f.*
         FROM feedback f
