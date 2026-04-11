@@ -100,6 +100,7 @@ $(function () {
         $('#statReportsChange').html('&#9660; Due this week');
 
         $('#sbFeedbackCount').text(s.totalFeedback.toLocaleString());
+        
     }
 
     /* ── Populate month mini-stats ────────────────────────────── */
