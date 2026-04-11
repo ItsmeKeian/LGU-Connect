@@ -1,8 +1,4 @@
-/**
- * admin_dashboard.js
- * LGU-Connect — Super Admin Dashboard
- * Requires: jQuery 3.7+, Chart.js 4.4+
- */
+
 
 $(function () {
 

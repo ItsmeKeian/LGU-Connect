@@ -20,16 +20,11 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
 <link rel="icon" href="../assets/img/logo.png" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-<!-- Bootstrap 5 CSS -->
-<link href="../assets/css/all.min.css" rel="stylesheet">
-<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-<!-- Bootstrap Icons -->
 
+<link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
 <link rel="stylesheet" href="../assets/css/bootstrap-icons.min.css"/>
-
-<link rel="stylesheet" href="../assets/css/admin_dashboard.css"/>
-<!-- Your custom sidebar/topbar CSS (pure CSS — keep as-is) -->
-<link rel="stylesheet" href="../assets/css/sidebar_header.css"/>
+<link rel="stylesheet" href="../assets/css/sidebar_header.css"/>   
+<link rel="stylesheet" href="../assets/css/admin_dashboard.css"/> 
 
 
 </head>
