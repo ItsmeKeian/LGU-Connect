@@ -6,13 +6,14 @@ header('Content-Type: application/json');
 
 try {
     $stmt = $conn->query("
-        SELECT
-            d.*,
-            0 AS feedback_count,
-            NULL AS avg_rating
-        FROM departments d
-        ORDER BY d.name ASC
-    ");
+    SELECT d.*,
+           COUNT(f.id)   AS feedback_count,
+           AVG(f.rating) AS avg_rating
+    FROM departments d
+    LEFT JOIN feedback f ON f.department_code = d.code
+    GROUP BY d.id
+    ORDER BY d.name ASC
+");
     $departments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($departments as &$dept) {
