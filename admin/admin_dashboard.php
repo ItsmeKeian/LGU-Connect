@@ -67,7 +67,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
       <li><a href="csmr_generator.php">
         <span class="nav-icon"><i class="bi bi-file-earmark-text"></i></span> CSMR Generator
       </a></li>
-      <li><a href="analytics.php">
+      <li><a href="admin_analytics.php">
         <span class="nav-icon"><i class="bi bi-bar-chart-line"></i></span> Analytics
       </a></li>
       <li><a href="export.php">
