@@ -56,7 +56,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
     </ul>
     <div class="sb-section">Reports</div>
     <ul class="sb-nav">
-      <li><a href="admin_csmr_generator.php" >
+      <li><a href="admin_csmr_generator.php" class="active">
         <span class="nav-icon"><i class="bi bi-file-earmark-text"></i></span> CSMR Generator
       </a></li>
       <li><a href="admin_analytics.php">
@@ -71,10 +71,10 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
       <li><a href="admin_manage_users.php">
         <span class="nav-icon"><i class="bi bi-people"></i></span> Manage Users
       </a></li>
-      <li><a href="admin_qrcodes.php" >
+      <li><a href="admin_qrcodes.php">
         <span class="nav-icon"><i class="bi bi-qr-code"></i></span> QR Codes
       </a></li>
-      <li><a href="admin_settings.php" class="active">
+      <li><a href="admin_settings.php">
         <span class="nav-icon"><i class="bi bi-gear"></i></span> Settings
       </a></li>
     </ul>

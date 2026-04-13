@@ -9,7 +9,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Manage Users | LGU-Connect</title>
+<title>All Feedback | LGU-Connect</title>
 <link rel="icon" href="../assets/img/logo.png" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -17,6 +17,8 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
 <link href="../assets/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/bootstrap-icons.min.css"/>
 <link rel="stylesheet" href="../assets/css/sidebar_header.css"/>
+
+
 </head>
 <body>
 <div class="app-shell">
@@ -54,13 +56,13 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
     </ul>
     <div class="sb-section">Reports</div>
     <ul class="sb-nav">
-      <li><a href="csmr_generator.php">
+      <li><a href="admin_csmr_generator.php" >
         <span class="nav-icon"><i class="bi bi-file-earmark-text"></i></span> CSMR Generator
       </a></li>
-      <li><a href="admin_analytics.php" class="active">
+      <li><a href="admin_analytics.php"  class="active">
         <span class="nav-icon"><i class="bi bi-bar-chart-line"></i></span> Analytics
       </a></li>
-      <li><a href="export.php">
+      <li><a href="admin_exportdata.php">
         <span class="nav-icon"><i class="bi bi-download"></i></span> Export Data
       </a></li>
     </ul>
@@ -69,10 +71,10 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
       <li><a href="admin_manage_users.php">
         <span class="nav-icon"><i class="bi bi-people"></i></span> Manage Users
       </a></li>
-      <li><a href="qrcodes.php">
+      <li><a href="admin_qrcodes.php">
         <span class="nav-icon"><i class="bi bi-qr-code"></i></span> QR Codes
       </a></li>
-      <li><a href="settings.php">
+      <li><a href="admin_settings.php">
         <span class="nav-icon"><i class="bi bi-gear"></i></span> Settings
       </a></li>
     </ul>
@@ -90,15 +92,15 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
     <div class="topbar">
       <button class="menu-toggle" id="menuToggle">&#9776;</button>
       <div class="topbar-title">
-        Manage Users
-        <span class="tb-subtitle">System User Accounts</span>
+        All Feedback
+        <span class="tb-subtitle">System-Wide Records</span>
       </div>
       <div class="topbar-actions">
         <button class="tb-btn" id="refreshBtn">
           <i class="bi bi-arrow-clockwise"></i> Refresh
         </button>
-        <button class="btn-add-user" onclick="openAddModal()">
-          <i class="bi bi-person-plus"></i> Add User
+        <button class="tb-btn primary" onclick="location.href='csmr_generator.php'">
+          <i class="bi bi-file-earmark-text"></i> Generate CSMR
         </button>
         <div class="tb-avatar" id="topbarAvatar" onclick="toggleAvatarDropdown(event)">
           <?= $avatarLetter ?>
@@ -127,23 +129,25 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
       <!-- Live bar -->
       <div class="live-bar">
         <div class="live-dot"></div>
-        <span class="live-text">
-          User Accounts &nbsp;&middot;&nbsp; Manage system access and roles
-        </span>
+        <span class="live-text">Live &nbsp;&middot;&nbsp; All submitted feedback across departments</span>
         <span class="live-date" id="todayDate"></span>
       </div>
 
-     
-
-    </div><!-- /page-content -->
-  </div><!-- /main-area -->
-</div><!-- /app-shell -->
+    
 
 
 
+    </div>
+    <!-- /page-content -->
+  </div>
+</div>
+
+
+<!-- Scripts -->
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/jquery-4.0.0.min.js"></script>
 <script src="../js/admin/admin_sidebarcount.js"></script>
+
 
 </body>
 </html>
