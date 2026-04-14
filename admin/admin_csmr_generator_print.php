@@ -136,7 +136,7 @@ function deptSqdAvg($d, $keys) {
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<title>CSMR – <?= htmlspecialchars($report_title) ?></title>
+<title>LGU-Connect | Municipality of San Julian – <?= htmlspecialchars($report_title) ?></title>
 <style>
 * { box-sizing:border-box; margin:0; padding:0; }
 body { font-family:'Times New Roman',Georgia,serif; font-size:11pt; color:#1a1a1a; background:#fff; }
