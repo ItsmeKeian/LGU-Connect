@@ -13,67 +13,10 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-<link href="../assets/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/bootstrap-icons.min.css"/>
 <link rel="stylesheet" href="../assets/css/sidebar_header.css"/>
 <link rel="stylesheet" href="../assets/css/admin_allfeedback.css"/>
-<style>
-/* ── Per-page selector ── */
-.per-page-wrap {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 12px;
-  color: #888;
-}
-.per-page-wrap select {
-  padding: 4px 8px;
-  font-size: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  background: #fff;
-  color: #333;
-  cursor: pointer;
-}
-.per-page-wrap select:focus {
-  outline: none;
-  border-color: #B5121B;
-}
 
-/* ── Pagination improvements ── */
-.pagination-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px;
-  border-top: 1px solid #f0f0f0;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.pagination-info {
-  font-size: 12.5px;
-  color: #888;
-}
-.page-link {
-  color: #B5121B;
-  border-color: #f0f0f0;
-  font-size: 13px;
-  padding: 5px 11px;
-}
-.page-item.active .page-link {
-  background-color: #B5121B;
-  border-color: #B5121B;
-  color: #fff;
-}
-.page-link:hover {
-  color: #8B0000;
-  background: #fdf0f0;
-  border-color: #e8c4c4;
-}
-.page-item.disabled .page-link {
-  color: #ccc;
-}
-</style>
 </head>
 <body>
 <div class="app-shell">
@@ -126,14 +69,17 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
 
   <!-- ══════════ MAIN AREA ══════════ -->
   <div class="main-area">
-    <div class="topbar">
+   <!-- Topbar -->
+   <div class="topbar">
       <button class="menu-toggle" id="menuToggle">&#9776;</button>
       <div class="topbar-title">
-        All Feedback
-        <span class="tb-subtitle">System-Wide Records</span>
+        System Overview
+        <span class="tb-subtitle">All Departments</span>
       </div>
       <div class="topbar-actions">
-        <button class="tb-btn" id="refreshBtn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+        <button class="tb-btn" id="refreshBtn">
+          <i class="bi bi-arrow-clockwise"></i> Refresh
+        </button>
         <button class="tb-btn primary" onclick="location.href='admin_csmr_generator.php'">
           <i class="bi bi-file-earmark-text"></i> Generate CSMR
         </button>
@@ -145,10 +91,15 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
               <div class="av-role">Super Administrator</div>
             </div>
             <div class="av-menu">
-              <a href="admin_settings.php" class="av-item"><i class="bi bi-person-circle"></i> My Profile</a>
-              <a href="admin_settings.php" class="av-item"><i class="bi bi-gear"></i> Settings</a>
+              <a href="admin_settings.php" class="av-item">
+                <i class="bi bi-person-circle"></i> My Profile
+              </a>
+              <a href="admin_settings.php" class="av-item">
+                <i class="bi bi-gear"></i> Settings
+              </a>
               <div class="av-divider"></div>
-              <a href="../php/logout.php" class="av-item danger" onclick="return confirm('Sign out?')">
+              <a href="../php/logout.php" class="av-item danger"
+                 onclick="return confirm('Are you sure you want to sign out?')">
                 <i class="bi bi-box-arrow-right"></i> Sign Out
               </a>
             </div>
@@ -331,6 +282,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/jquery-4.0.0.min.js"></script>
 <script src="../js/admin/admin_sidebarcount.js"></script>
+<script src="../assets/js/mobile_toggle.js"></script>
 <script src="../js/admin/admin_allfeedback.js"></script>
 </body>
 </html>

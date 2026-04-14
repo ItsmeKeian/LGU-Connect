@@ -625,6 +625,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/jquery-4.0.0.min.js"></script>
 <script src="../js/admin/admin_sidebarcount.js"></script>
+<script src="../assets/js/mobile_toggle.js"></script>
 <script>
 
 // ── Date ──

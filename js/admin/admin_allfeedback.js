@@ -31,12 +31,18 @@ const RATING_LABELS = {
 };
 
 // ── Init ──
-document.getElementById('todayDate').textContent =
-  new Date().toLocaleDateString('en-PH', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-document.getElementById('menuToggle')?.addEventListener('click', () => {
-  document.getElementById('sidebar').classList.toggle('sb-open');
-});
+const todayEl = document.getElementById('todayDate');
+if (todayEl) {
+  todayEl.textContent =
+    new Date().toLocaleDateString('en-PH', {
+      weekday:'long',
+      year:'numeric',
+      month:'long',
+      day:'numeric'
+    });
+}
+
 
 function toggleAvatarDropdown(e) {
   e.stopPropagation();

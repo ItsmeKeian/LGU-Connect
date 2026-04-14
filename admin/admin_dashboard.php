@@ -93,10 +93,6 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
         <span class="tb-subtitle">All Departments</span>
       </div>
       <div class="topbar-actions">
-        <div class="search-wrap">
-          <span class="search-icon"><i class="bi bi-search"></i></span>
-          <input type="text" class="tb-search" id="globalSearch" placeholder="Search departments..."/>
-        </div>
         <button class="tb-btn" id="refreshBtn">
           <i class="bi bi-arrow-clockwise"></i> Refresh
         </button>

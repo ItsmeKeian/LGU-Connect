@@ -93,8 +93,8 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
     <div class="topbar">
       <button class="menu-toggle" id="menuToggle">&#9776;</button>
       <div class="topbar-title">
-        Departments
-        <span class="tb-subtitle">Manage All Departments</span>
+        System Overview
+        <span class="tb-subtitle">All Departments</span>
       </div>
       <div class="topbar-actions">
         <button class="tb-btn" id="refreshBtn">
@@ -103,7 +103,6 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
         <button class="tb-btn primary" onclick="location.href='admin_csmr_generator.php'">
           <i class="bi bi-file-earmark-text"></i> Generate CSMR
         </button>
-        <!-- Avatar dropdown -->
         <div class="tb-avatar" id="topbarAvatar" onclick="toggleAvatarDropdown(event)">
           <?= $avatarLetter ?>
           <div class="avatar-dropdown" id="avatarDropdown">
@@ -325,6 +324,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/jquery-4.0.0.min.js"></script>
 <script src="../js/admin/admin_sidebarcount.js"></script>
+<script src="../assets/js/mobile_toggle.js"></script>
 <script src="../js/admin/admin_departments.js"></script>
 
 </body>
