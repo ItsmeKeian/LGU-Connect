@@ -8,7 +8,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>LGU-Connect | Municipality of San Julian</title>
+<title>Export Data | LGU-Connect</title>
 <link rel="icon" href="../assets/img/logo.png" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -292,10 +292,28 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
         </div>
 
         <!-- ── Export Log ── -->
-        <div class="section-label"><i class="bi bi-clock-history"></i> Export History <span style="font-weight:400;color:#bbb;font-size:10px;text-transform:none;letter-spacing:0">(this session)</span></div>
+        <div class="section-label">
+          <i class="bi bi-clock-history"></i> Export History
+          <span style="font-weight:400;color:#bbb;font-size:10px;text-transform:none;letter-spacing:0">(saved to database)</span>
+        </div>
         <div class="export-log">
+          <div class="export-log-header">
+            <i class="bi bi-clock-history"></i> Recent Exports
+            <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+              <span id="logCount" style="font-size:11px;color:#aaa;font-weight:400"></span>
+              <button onclick="loadExportHistory()" style="background:none;border:1px solid #ddd;border-radius:6px;padding:4px 10px;font-size:11px;color:#666;cursor:pointer;display:flex;align-items:center;gap:4px">
+                <i class="bi bi-arrow-clockwise"></i> Refresh
+              </button>
+              <button onclick="clearHistory()" style="background:none;border:1px solid #fcc;border-radius:6px;padding:4px 10px;font-size:11px;color:#c0392b;cursor:pointer;display:flex;align-items:center;gap:4px">
+                <i class="bi bi-trash3"></i> Clear All
+              </button>
+            </div>
+          </div>
           <div class="log-list" id="exportLog">
-            <div class="log-empty">No exports yet this session. Choose an export type above.</div>
+            <div class="log-empty">
+              <i class="bi bi-hourglass" style="font-size:20px;display:block;margin-bottom:8px;color:#ddd"></i>
+              Loading export history…
+            </div>
           </div>
         </div>
 

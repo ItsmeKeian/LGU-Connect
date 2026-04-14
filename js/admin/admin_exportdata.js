@@ -1,4 +1,3 @@
-
 // ── Date display ──
 document.getElementById('todayDate').textContent =
   new Date().toLocaleDateString('en-PH',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
@@ -22,6 +21,7 @@ $.ajax({
       sel.appendChild(opt);
     });
     updateStats();
+    loadExportHistory(); // ← load DB history on page open
   }
 });
 
@@ -80,74 +80,130 @@ function updateStats() {
   });
 }
 
-// ── Export ──
-const exportLog = [];
+// ── Export — trigger download then refresh DB history ──
+const exportTypeLabels = {
+  feedback:    'Raw Feedback Records',
+  summary:     'Department Summary',
+  sqd:         'SQD Scores Report',
+  departments: 'Departments Directory'
+};
+const exportTypeIcons = {
+  feedback:    'bi-clipboard-data-fill',
+  summary:     'bi-building-check',
+  sqd:         'bi-bar-chart-steps',
+  departments: 'bi-buildings-fill'
+};
 
 function doExport(type, format) {
-  const from = document.getElementById('filterDateFrom').value;
-  const to   = document.getElementById('filterDateTo').value;
-  const dept = document.getElementById('filterDept').value;
-  const deptName = document.getElementById('filterDept').selectedOptions[0].text;
+  const from     = document.getElementById('filterDateFrom').value;
+  const to       = document.getElementById('filterDateTo').value;
+  const dept     = document.getElementById('filterDept').value;
 
   if (!from || !to) { alert('Please select a date range first.'); return; }
 
   const params = new URLSearchParams({
     type, format,
-    dept_id: dept,
+    dept_id:   dept,
     date_from: from,
-    date_to: to
+    date_to:   to
   });
 
-  // Trigger download
+  // Trigger file download
   window.location.href = '../php/get/get_export_data.php?' + params.toString();
 
-  // Log the export
-  const now    = new Date();
-  const labels = {
-    feedback: 'Raw Feedback Records',
-    summary:  'Department Summary',
-    sqd:      'SQD Scores Report',
-    departments: 'Departments Directory'
-  };
-  exportLog.unshift({
-    type, format,
-    label: labels[type],
-    dept: dept ? deptName : 'All Departments',
-    from, to,
-    time: now.toLocaleTimeString('en-PH', {hour:'2-digit',minute:'2-digit'})
-  });
-  renderLog();
+  // Refresh history after short delay (give server time to save the log)
+  setTimeout(loadExportHistory, 1500);
 }
 
-function renderLog() {
+// ── Load export history from DB ──
+function loadExportHistory() {
+  $.ajax({
+    url: '../php/get/get_export_logs.php',
+    method: 'GET',
+    dataType: 'json',
+    success(res) {
+      if (!res.success) return;
+      renderLogFromDB(res.logs);
+    },
+    error(xhr) {
+      console.error('Export log error:', xhr.responseText);
+    }
+  });
+}
+
+function renderLogFromDB(logs) {
   const el = document.getElementById('exportLog');
-  if (exportLog.length === 0) {
-    el.innerHTML = '<div class="log-empty">No exports yet this session.</div>';
+
+  if (!logs || logs.length === 0) {
+    el.innerHTML = `
+      <div class="log-empty">
+        <i class="bi bi-inbox" style="font-size:24px;display:block;margin-bottom:8px;color:#ddd"></i>
+        No export history yet. Click any Export button above to get started.
+      </div>`;
+    document.getElementById('logCount').textContent = '';
     return;
   }
 
-  const fmtDate = d => new Date(d).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'});
-  const typeIcon = { feedback:'bi-clipboard-data-fill', summary:'bi-building-check', sqd:'bi-bar-chart-steps', departments:'bi-buildings-fill' };
+  document.getElementById('logCount').textContent = logs.length + ' record' + (logs.length !== 1 ? 's' : '');
 
-  el.innerHTML = exportLog.map(e => `
-    <div class="log-item">
-      <div class="log-icon ${e.format}">
-        <i class="bi ${typeIcon[e.type] || 'bi-download'}"></i>
-      </div>
-      <div class="log-name">
-        ${e.label}
-        <span style="font-size:11px;color:#aaa;font-weight:400;margin-left:6px">
-          ${e.dept} · ${fmtDate(e.from)} – ${fmtDate(e.to)}
+  const fmtDate = d => {
+    if (!d) return '—';
+    return new Date(d + 'T00:00:00').toLocaleDateString('en-PH', {month:'short', day:'numeric', year:'numeric'});
+  };
+
+  el.innerHTML = logs.map(log => {
+    const fmt      = log.export_format;
+    const typeIcon = exportTypeIcons[log.export_type] || 'bi-download';
+    const label    = exportTypeLabels[log.export_type] || log.export_type;
+    const dept     = log.dept_name || 'All Departments';
+    const records  = parseInt(log.record_count).toLocaleString();
+    const badgeBg  = fmt === 'csv' ? '#f0f9f0' : '#e8f5e9';
+    const badgeCl  = fmt === 'csv' ? '#1e7c3b' : '#155724';
+    const ext      = fmt === 'excel' ? 'xls' : 'csv';
+
+    return `
+      <div class="log-item">
+        <div class="log-icon ${fmt}">
+          <i class="bi ${typeIcon}"></i>
+        </div>
+        <div class="log-name">
+          <span style="font-weight:600;color:#222">${label}</span>
+          <span style="font-size:11px;color:#aaa;font-weight:400;margin-left:8px">
+            ${escHtml(dept)} &nbsp;·&nbsp; ${fmtDate(log.date_from)} – ${fmtDate(log.date_to)}
+            &nbsp;·&nbsp; <strong style="color:#555">${records}</strong> records
+          </span>
+          <span style="font-size:11px;color:#bbb;display:block;margin-top:2px">
+            <i class="bi bi-person" style="font-size:10px"></i> ${escHtml(log.exported_by)}
+          </span>
+        </div>
+        <span style="font-size:10px;background:${badgeBg};color:${badgeCl};padding:3px 9px;border-radius:10px;font-weight:600;margin-right:6px;flex-shrink:0">
+          .${ext}
         </span>
-      </div>
-      <span style="font-size:10px;background:${e.format==='csv'?'#f0f9f0':'#e8f5e9'};
-        color:${e.format==='csv'?'#1e7c3b':'#155724'};
-        padding:2px 8px;border-radius:10px;font-weight:600;margin-right:6px">
-        .${e.format==='excel'?'xls':'csv'}
-      </span>
-      <div class="log-time">${e.time}</div>
-    </div>
-  `).join('');
+        <div class="log-time" style="flex-shrink:0;text-align:right">
+          <div>${log.export_date}</div>
+          <div style="font-size:10px;color:#bbb">${log.export_time}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── Clear all history ──
+function clearHistory() {
+  if (!confirm('Clear all export history? This cannot be undone.')) return;
+  $.ajax({
+    url: '../php/get/get_export_logs.php',
+    method: 'POST',
+    dataType: 'json',
+    data: { action: 'clear' },
+    success(res) {
+      if (res.success) loadExportHistory();
+    }
+  });
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 // ── Avatar dropdown ──

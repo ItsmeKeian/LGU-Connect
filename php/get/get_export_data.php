@@ -1,6 +1,5 @@
 <?php
 
-
 require "../auth_check.php";
 require "../dbconnect.php";
 requireSuperAdmin();
@@ -160,6 +159,30 @@ try {
             echo json_encode(['error' => 'Invalid export type']);
             exit;
     }
+
+    // ── Save to export_logs table ──
+    $record_count = count($rows);
+    $dept_name_log = null;
+    if ($dept_code) {
+        $ds = $conn->prepare("SELECT name FROM departments WHERE code = :code LIMIT 1");
+        $ds->execute([':code' => $dept_code]);
+        $dept_name_log = $ds->fetchColumn() ?: $dept_code;
+    }
+    $conn->prepare("
+        INSERT INTO export_logs
+            (exported_by, export_type, export_format, dept_code, dept_name, date_from, date_to, record_count)
+        VALUES
+            (:by, :type, :fmt, :dept_code, :dept_name, :dfrom, :dto, :cnt)
+    ")->execute([
+        ':by'        => CURRENT_USER,
+        ':type'      => $type,
+        ':fmt'       => $format,
+        ':dept_code' => $dept_code,
+        ':dept_name' => $dept_name_log,
+        ':dfrom'     => $date_from_dt,
+        ':dto'       => $date_to_dt,
+        ':cnt'       => $record_count,
+    ]);
 
     // ── Output ──
     if ($format === 'excel') {
