@@ -1,0 +1,224 @@
+:root {
+    --red-main: #8B1A1A;
+    --red-light: #f8f0f0;
+    --red-border: #e8c4c4;
+    --card-radius: 12px;
+  }
+  
+  .export-content { padding: 24px; }
+  
+  /* ── Section title ── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #efefef;
+  }
+  
+  /* ── Export Cards Grid ── */
+  .export-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+  
+  .export-card {
+    background: #fff;
+    border-radius: var(--card-radius);
+    border: 1px solid #e8e8e8;
+    overflow: hidden;
+    transition: box-shadow .2s, border-color .2s;
+  }
+  .export-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    border-color: var(--red-border);
+  }
+  
+  .export-card-header {
+    padding: 18px 20px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .export-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .export-card-icon.red   { background: #fff0f0; color: var(--red-main); }
+  .export-card-icon.green { background: #eef8f0; color: #1e7c3b; }
+  .export-card-icon.blue  { background: #eef5ff; color: #1a6fbf; }
+  .export-card-icon.amber { background: #fff8ee; color: #b06c10; }
+  
+  .export-card-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 4px;
+  }
+  .export-card-info p {
+    font-size: 12px;
+    color: #888;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  /* ── Columns preview ── */
+  .col-preview {
+    padding: 0 20px 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .col-tag {
+    background: #f5f5f5;
+    color: #666;
+    font-size: 10.5px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    border: 1px solid #ececec;
+  }
+  .col-tag.highlight { background: var(--red-light); color: var(--red-main); border-color: var(--red-border); }
+  
+  /* ── Export card footer ── */
+  .export-card-footer {
+    padding: 14px 20px;
+    border-top: 1px solid #f5f5f5;
+    display: flex;
+    gap: 8px;
+  }
+  .btn-export {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 14px;
+    border-radius: 7px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all .18s;
+    text-decoration: none;
+  }
+  .btn-export.csv {
+    background: #f0f9f0;
+    color: #1e7c3b;
+    border: 1px solid #c8e6c9;
+  }
+  .btn-export.csv:hover { background: #1e7c3b; color: #fff; }
+  .btn-export.excel {
+    background: #e8f5e9;
+    color: #155724;
+    border: 1px solid #a5d6a7;
+  }
+  .btn-export.excel:hover { background: #155724; color: #fff; }
+  
+  /* ── Filters panel ── */
+  .filters-panel {
+    background: #fff;
+    border-radius: var(--card-radius);
+    border: 1px solid #e8e8e8;
+    padding: 20px;
+    margin-bottom: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px;
+  }
+  .filter-field { display: flex; flex-direction: column; gap: 6px; }
+  .filter-field label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .filter-field select,
+  .filter-field input[type=date] {
+    padding: 8px 12px;
+    font-size: 13px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    background: #fafafa;
+    color: #333;
+    min-width: 160px;
+  }
+  .filter-field select:focus,
+  .filter-field input:focus {
+    outline: none;
+    border-color: var(--red-main);
+    box-shadow: 0 0 0 3px rgba(139,26,26,.08);
+  }
+  
+  /* ── Recent exports log ── */
+  .export-log {
+    background: #fff;
+    border-radius: var(--card-radius);
+    border: 1px solid #e8e8e8;
+    overflow: hidden;
+  }
+  .export-log-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .export-log-header i { color: var(--red-main); }
+  .log-list { padding: 8px 0; max-height: 260px; overflow-y: auto; }
+  .log-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px;
+    border-bottom: 1px solid #fafafa;
+    font-size: 12.5px;
+    transition: background .12s;
+  }
+  .log-item:last-child { border-bottom: none; }
+  .log-item:hover { background: #fafafa; }
+  .log-icon { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+  .log-icon.csv   { background: #f0f9f0; color: #1e7c3b; }
+  .log-icon.excel { background: #e8f5e9; color: #155724; }
+  .log-name  { flex: 1; color: #333; font-weight: 500; }
+  .log-time  { color: #aaa; font-size: 11px; }
+  .log-empty { padding: 28px; text-align: center; color: #bbb; font-size: 13px; }
+  
+  /* ── Stats bar ── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stats-box {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .stats-box i { font-size: 22px; color: var(--red-main); opacity: .7; }
+  .stats-box .sv { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+  .stats-box .sl { font-size: 11px; color: #999; margin-top: 2px; }
