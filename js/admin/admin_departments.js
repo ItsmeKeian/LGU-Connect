@@ -1,6 +1,4 @@
-// ============================================================
-// admin_departments.js — Departments page ONLY
-// ============================================================
+
 
 const BASE_URL = window.location.origin + '/lgu-connect/feedback.php?dept=';
 
@@ -15,6 +13,11 @@ const deptModal   = new bootstrap.Modal(document.getElementById('deptModal'));
 const qrModal     = new bootstrap.Modal(document.getElementById('qrModal'));
 const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
 let deleteTargetId = null;
+let allDeptsCache  = []; // ✅ Store loaded departments for edit lookup
+
+// Date display
+document.getElementById('todayDate').textContent =
+  new Date().toLocaleDateString('en-PH', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
 // Refresh button
 document.getElementById('refreshBtn').addEventListener('click', loadDepartments);
@@ -22,11 +25,11 @@ document.getElementById('refreshBtn').addEventListener('click', loadDepartments)
 // Search
 document.getElementById('deptSearch').addEventListener('input', function() {
   const q = this.value.toLowerCase();
-  document.querySelectorAll('.dept-card').forEach(card => {
-    const name = card.dataset.name.toLowerCase();
-    const code = card.dataset.code.toLowerCase();
-    card.closest('.dept-card-wrapper').style.display =
-      (name.includes(q) || code.includes(q)) ? '' : 'none';
+  document.querySelectorAll('.dept-card-wrapper').forEach(wrap => {
+    const card = wrap.querySelector('.dept-card');
+    const name = (card.dataset.name || '').toLowerCase();
+    const code = (card.dataset.code || '').toLowerCase();
+    wrap.style.display = (name.includes(q) || code.includes(q)) ? '' : 'none';
   });
 });
 
@@ -50,6 +53,7 @@ function loadDepartments() {
       return;
     }
     updateSummary(res.data);
+    allDeptsCache = res.data; // ✅ Cache for edit lookup
     renderCards(res.data);
   }).fail(() => showToast('Failed to load departments.', 'danger'));
 }
@@ -62,14 +66,26 @@ function renderCards(depts) {
     const rating     = parseFloat(d.avg_rating) || 0;
     const ratingW    = (rating / 5 * 100).toFixed(1);
     const stars      = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+    const sat        = parseFloat(d.satisfaction_rate) || 0;
     const statusCls  = d.status === 'active' ? 'active' : 'inactive';
     const statusLbl  = d.status === 'active' ? 'Active' : 'Inactive';
-    const satisfaction = rating >= 4 ? 'Satisfied' : rating >= 3 ? 'Moderate' : 'Needs Improvement';
-    const satColor   = rating >= 4 ? '#2e7d32' : rating >= 3 ? '#e65100' : '#B5121B';
+    const fbCount    = parseInt(d.feedback_count) || 0;
+
+    // Satisfaction label & color
+    let satLabel, satColor;
+    if (fbCount === 0) {
+      satLabel = '—'; satColor = '#aaa';
+    } else if (sat >= 80) {
+      satLabel = 'Satisfied'; satColor = '#2e7d32';
+    } else if (sat >= 60) {
+      satLabel = 'Moderate'; satColor = '#e65100';
+    } else {
+      satLabel = 'Needs Work'; satColor = '#B5121B';
+    }
 
     html += `
     <div class="dept-card-wrapper">
-      <div class="dept-card" data-name="${d.name}" data-code="${d.code}">
+      <div class="dept-card" data-name="${escAttr(d.name)}" data-code="${escAttr(d.code)}">
         <div class="dept-card-top" style="background:${color};"></div>
         <div class="dept-card-body">
           <div class="dept-card-head">
@@ -78,38 +94,42 @@ function renderCards(depts) {
             </div>
             <div class="dept-actions">
               <button class="dept-action-btn edit" title="Edit"
-                onclick="openEditModal(${JSON.stringify(d).replace(/'/g,'&#39;')})">
+                data-id="${d.id}"
+                onclick="openEditById(this.dataset.id)">
                 <i class="bi bi-pencil"></i>
               </button>
               <button class="dept-action-btn qr" title="QR Code"
-                onclick="openQrModal('${d.code}','${d.name}')">
+                onclick="openQrModal('${escAttr(d.code)}','${escAttr(d.name)}')">
                 <i class="bi bi-qr-code"></i>
               </button>
               <button class="dept-action-btn delete" title="Delete"
-                onclick="openDeleteModal(${d.id},'${d.name}')">
+                onclick="openDeleteModal(${d.id},'${escAttr(d.name)}')">
                 <i class="bi bi-trash"></i>
               </button>
             </div>
           </div>
-          <div class="dept-name">${d.name}</div>
-          <div class="dept-code" style="color:${color};font-weight:600;font-size:0.72rem;">${d.code}</div>
-          ${d.head ? `<div class="dept-code mt-1"><i class="bi bi-person me-1"></i>${d.head}</div>` : ''}
+
+          <div class="dept-name">${escHtml(d.name)}</div>
+          <div class="dept-code" style="color:${color};font-weight:600;font-size:0.72rem;">${escHtml(d.code)}</div>
+          ${d.head ? `<div class="dept-code mt-1"><i class="bi bi-person me-1"></i>${escHtml(d.head)}</div>` : ''}
+
           <div class="dept-stats">
             <div class="dept-stat">
-              <div class="dept-stat-val" style="color:${color};">${d.feedback_count ?? 0}</div>
+              <div class="dept-stat-val" style="color:${color};">${fbCount}</div>
               <div class="dept-stat-label">Responses</div>
             </div>
             <div class="dept-stat">
-              <div class="dept-stat-val">${rating > 0 ? rating.toFixed(1) : '—'}</div>
+              <div class="dept-stat-val">${rating > 0 ? rating.toFixed(2) : '—'}</div>
               <div class="dept-stat-label">Avg Rating</div>
             </div>
             <div class="dept-stat">
-              <div class="dept-stat-val" style="color:${satColor};font-size:0.7rem;">
-                ${rating > 0 ? satisfaction : '—'}
+              <div class="dept-stat-val" style="color:${satColor};font-size:${fbCount > 0 ? '0.85rem' : '1rem'};">
+                ${fbCount > 0 ? sat + '%' : '—'}
               </div>
               <div class="dept-stat-label">Satisfaction</div>
             </div>
           </div>
+
           <div class="dept-rating-bar">
             <div class="dept-rating-fill"
                  style="width:${ratingW}%;background:linear-gradient(to right,${color},#F0C030);">
@@ -117,11 +137,12 @@ function renderCards(depts) {
           </div>
           <div style="font-size:0.72rem;color:#C8991A;letter-spacing:1px;">${stars}</div>
         </div>
+
         <div class="dept-card-foot">
           <span class="dept-status ${statusCls}">
             <span class="sdot"></span> ${statusLbl}
           </span>
-          <a href="admin_allfeedback.php?dept=${d.code}" class="btn-view-dept">
+          <a href="admin_allfeedback.php?dept=${encodeURIComponent(d.code)}" class="btn-view-dept">
             View Feedback <i class="bi bi-arrow-right"></i>
           </a>
         </div>
@@ -132,13 +153,17 @@ function renderCards(depts) {
 }
 
 // ── Summary cards ──
+// ✅ Only averages from departments that actually have feedback
 function updateSummary(depts) {
   const total   = depts.length;
   const active  = depts.filter(d => d.status === 'active').length;
-  const totalFB = depts.reduce((s,d) => s + (parseInt(d.feedback_count)||0), 0);
-  const avgR    = depts.length
-    ? (depts.reduce((s,d) => s + (parseFloat(d.avg_rating)||0), 0) / depts.length).toFixed(2)
-    : '—';
+  const totalFB = depts.reduce((s, d) => s + (parseInt(d.feedback_count) || 0), 0);
+
+  // Weighted avg — only from depts that have feedback
+  const withFB = depts.filter(d => parseFloat(d.avg_rating) > 0);
+  const avgR   = withFB.length
+    ? (withFB.reduce((s, d) => s + (parseFloat(d.avg_rating) || 0), 0) / withFB.length).toFixed(2)
+    : '0.00';
 
   $('#sumTotal').text(total);
   $('#sumActive').text(active);
@@ -155,6 +180,16 @@ function openAddModal() {
   });
   document.getElementById('deptStatus').value = 'active';
   deptModal.show();
+}
+
+// ── Edit by ID (safe — no inline JSON) ──
+function openEditById(id) {
+  const d = allDeptsCache.find(dept => String(dept.id) === String(id));
+  if (!d) {
+    showToast('Department not found. Please refresh.', 'danger');
+    return;
+  }
+  openEditModal(d);
 }
 
 // ── Edit modal ──
@@ -260,6 +295,26 @@ function showToast(msg, type = 'success') {
   el.className = `toast align-items-center border-0 text-white bg-${type === 'success' ? 'success' : 'danger'}`;
   tx.textContent = msg;
   new bootstrap.Toast(el, {delay: 3000}).show();
+}
+
+// ── Avatar dropdown ──
+function toggleAvatarDropdown(e) {
+  e.stopPropagation();
+  document.getElementById('avatarDropdown').classList.toggle('show');
+}
+document.addEventListener('click', () => {
+  const dd = document.getElementById('avatarDropdown');
+  if (dd) dd.classList.remove('show');
+});
+
+// ── Helpers ──
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function escAttr(s) {
+  if (!s) return '';
+  return String(s).replace(/'/g,"\\'").replace(/"/g,'&quot;');
 }
 
 // ── Init ──

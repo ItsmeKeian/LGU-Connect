@@ -100,7 +100,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
         <button class="tb-btn" id="refreshBtn">
           <i class="bi bi-arrow-clockwise"></i> Refresh
         </button>
-        <button class="tb-btn primary" onclick="location.href='csmr_generator.php'">
+        <button class="tb-btn primary" onclick="location.href='admin_csmr_generator.php'">
           <i class="bi bi-file-earmark-text"></i> Generate CSMR
         </button>
         <!-- Avatar dropdown -->
@@ -112,11 +112,15 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
               <div class="av-role">Super Administrator</div>
             </div>
             <div class="av-menu">
-              <a href="settings.php" class="av-item"><i class="bi bi-person-circle"></i> My Profile</a>
-              <a href="settings.php" class="av-item"><i class="bi bi-gear"></i> Settings</a>
+              <a href="admin_settings.php" class="av-item">
+                <i class="bi bi-person-circle"></i> My Profile
+              </a>
+              <a href="admin_settings.php" class="av-item">
+                <i class="bi bi-gear"></i> Settings
+              </a>
               <div class="av-divider"></div>
               <a href="../php/logout.php" class="av-item danger"
-                 onclick="return confirm('Sign out?')">
+                 onclick="return confirm('Are you sure you want to sign out?')">
                 <i class="bi bi-box-arrow-right"></i> Sign Out
               </a>
             </div>

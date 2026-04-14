@@ -80,12 +80,19 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
               <div class="av-name"><?= htmlspecialchars(CURRENT_USER) ?></div>
               <div class="av-role">Super Administrator</div>
             </div>
-            <div class="av-menu">
-              <a href="admin_settings.php" class="av-item"><i class="bi bi-person-circle"></i> My Profile</a>
-              <a href="admin_settings.php" class="av-item"><i class="bi bi-gear"></i> Settings</a>
-              <div class="av-divider"></div>
-              <a href="../php/logout.php" class="av-item danger" onclick="return confirm('Sign out?')"><i class="bi bi-box-arrow-right"></i> Sign Out</a>
-            </div>
+              <div class="av-menu">
+                <a href="admin_settings.php" class="av-item">
+                  <i class="bi bi-person-circle"></i> My Profile
+                </a>
+                <a href="admin_settings.php" class="av-item">
+                  <i class="bi bi-gear"></i> Settings
+                </a>
+                <div class="av-divider"></div>
+                <a href="../php/logout.php" class="av-item danger"
+                  onclick="return confirm('Are you sure you want to sign out?')">
+                  <i class="bi bi-box-arrow-right"></i> Sign Out
+                </a>
+              </div>
           </div>
         </div>
       </div>

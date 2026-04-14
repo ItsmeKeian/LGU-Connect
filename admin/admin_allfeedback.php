@@ -99,7 +99,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
         <button class="tb-btn" id="refreshBtn">
           <i class="bi bi-arrow-clockwise"></i> Refresh
         </button>
-        <button class="tb-btn primary" onclick="location.href='csmr_generator.php'">
+        <button class="tb-btn primary" onclick="location.href='admin_csmr_generator.php'">
           <i class="bi bi-file-earmark-text"></i> Generate CSMR
         </button>
         <div class="tb-avatar" id="topbarAvatar" onclick="toggleAvatarDropdown(event)">
