@@ -39,7 +39,7 @@ function loadAnalytics() {
   const period = document.querySelector('.chip.active')?.dataset.period || 'this_month';
   const dept   = document.getElementById('filterDept').value;
 
-  document.getElementById('spinnerOverlay').classList.add('show');
+ 
   document.getElementById('loadBtn').classList.add('loading');
 
   $.ajax({

@@ -307,10 +307,7 @@ $avatarLetter = strtoupper(substr(CURRENT_USER, 0, 1));
   </div><!-- /main-area -->
 </div><!-- /app-shell -->
 
-<!-- Spinner overlay -->
-<div class="spinner-overlay" id="spinnerOverlay">
-  <div class="spinner"></div>
-</div>
+
 
 <!-- Chart.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
