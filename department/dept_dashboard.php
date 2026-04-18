@@ -363,7 +363,7 @@ $deptInfo = $deptStmt->fetch(PDO::FETCH_ASSOC);
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/jquery-4.0.0.min.js"></script>
 <script src="../assets/js/mobile_toggle.js"></script>
-<script src="../js/department/dashboard.js"></script>
+
 
 <script>
 const DEPT_CODE = <?= json_encode($dept_code) ?>;
@@ -374,5 +374,6 @@ let chartVolume = null;
 
 
 </script>
+<script src="../js/department/dashboard.js"></script>
 </body>
 </html>
