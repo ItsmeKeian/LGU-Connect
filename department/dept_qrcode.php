@@ -316,6 +316,8 @@ $stats = $statsStmt->fetch(PDO::FETCH_ASSOC);
         <div class="sb-sub">San Julian, E. Samar</div>
       </div>
     </div>
+
+    <!-- Department badge -->
     <div class="sb-dept-badge">
       <div class="sb-dept-badge-icon"><i class="bi bi-building"></i></div>
       <div>
@@ -323,6 +325,7 @@ $stats = $statsStmt->fetch(PDO::FETCH_ASSOC);
         <div class="sb-dept-badge-code"><?= htmlspecialchars($dept_code) ?></div>
       </div>
     </div>
+
     <div class="sb-role">
       <div class="role-dot"></div>
       <div>
@@ -330,18 +333,34 @@ $stats = $statsStmt->fetch(PDO::FETCH_ASSOC);
         <div class="role-sub">Department User</div>
       </div>
     </div>
+
     <div class="sb-section">My Department</div>
     <ul class="sb-nav">
-      <li><a href="dept_dashboard.php"><span class="nav-icon"><i class="bi bi-speedometer2"></i></span> My Dashboard</a></li>
-      <li><a href="dept_feedback.php"><span class="nav-icon"><i class="bi bi-clipboard-check"></i></span> Feedback Inbox <span class="nav-badge" id="sbFeedbackCount">0</span></a></li>
-      <li><a href="dept_qrcode.php" class="active"><span class="nav-icon"><i class="bi bi-qr-code"></i></span> My QR Code</a></li>
+      <li><a href="dept_dashboard.php" >
+        <span class="nav-icon"><i class="bi bi-speedometer2"></i></span> My Dashboard
+      </a></li>
+      <li><a href="dept_feedback.php">
+        <span class="nav-icon"><i class="bi bi-clipboard-check"></i></span> Feedback Inbox
+        <span class="nav-badge" id="sbFeedbackCount">0</span>
+      </a></li>
+      <li><a href="dept_qrcode.php" class="active">
+        <span class="nav-icon"><i class="bi bi-qr-code"></i></span> My QR Code
+      </a></li>
     </ul>
+
     <div class="sb-section">Reports</div>
     <ul class="sb-nav">
-      <li><a href="dept_csmr.php"><span class="nav-icon"><i class="bi bi-file-earmark-text"></i></span> Generate CSMR</a></li>
-      <li><a href="dept_analytics.php"><span class="nav-icon"><i class="bi bi-bar-chart-line"></i></span> My Analytics</a></li>
-      <li><a href="dept_export.php"><span class="nav-icon"><i class="bi bi-download"></i></span> Export Data</a></li>
+      <li><a href="dept_csmr.php">
+        <span class="nav-icon"><i class="bi bi-file-earmark-text"></i></span> Generate CSMR
+      </a></li>
+      <li><a href="dept_analytics.php">
+        <span class="nav-icon"><i class="bi bi-bar-chart-line"></i></span> My Analytics
+      </a></li>
+      <li><a href="dept_export.php">
+        <span class="nav-icon"><i class="bi bi-download"></i></span> Export Data
+      </a></li>
     </ul>
+
     <div class="sb-footer">
       <a href="../php/logout.php" onclick="return confirm('Are you sure you want to sign out?')">
         <span class="nav-icon"><i class="bi bi-box-arrow-right"></i></span> Sign Out
