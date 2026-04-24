@@ -60,6 +60,7 @@ $deptInfo     = $deptStmt->fetch(PDO::FETCH_ASSOC);
     <div class="sb-section">Reports</div>
     <ul class="sb-nav">
       <li><a href="dept_csmr.php"><span class="nav-icon"><i class="bi bi-file-earmark-text"></i></span> Generate CSMR</a></li>
+      <li><a href="dept_predictive.php"><span class="nav-icon"><i class="bi bi-graph-up-arrow"></i></span> Predictive Analytics</a></li>
    
       <li><a href="dept_export.php"><span class="nav-icon"><i class="bi bi-download"></i></span> Export Data</a></li>
     </ul>
